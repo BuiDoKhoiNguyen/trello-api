@@ -2,9 +2,12 @@ import express from "express"
 import { CLOSE_DB, CONNECT_DB } from "./config/mongodb"
 import exitHook from "async-exit-hook"
 import { env } from "~/config/environment"
+import { APIs_V1 } from "~/routes/v1"
 
 const START_SEVER = () => {
   const app = express()
+
+  app.use('/v1', APIs_V1)
 
   app.get("/", (req, res) => {
     // console.log(await GET_DB().listCollections().toArray())
@@ -14,7 +17,7 @@ const START_SEVER = () => {
   app.listen(env.APP_PORT, env.APP_HOST, () => {
     // eslint-disable-next-line no-console
     console.log(
-      `3. Hello ${env.AUTHOR}, I am running at http://${env.APP_HOST} and Port: ${env.APP_PORT}/`
+      `3. Hello ${env.AUTHOR}, I am running at http://${env.APP_HOST}:${env.APP_PORT}/`
     )
   })
 
