@@ -14,12 +14,12 @@ const createNew = async (req, res, next) => {
     })
 
     try {
-        console.log('req.body:' ,req.body)
+        // console.log('req.body:' ,req.body)
 
         // abortEarly to check error top to bot
         await correctCondition.validateAsync(req.body, { abortEarly: false })
         next()  
-        res.status(StatusCodes.CREATED).json({ message: 'Post: API create new board' })
+       
     } catch (error) {
         console.log(error)
         res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
