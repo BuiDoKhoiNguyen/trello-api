@@ -3,7 +3,7 @@ import { CLOSE_DB, CONNECT_DB } from "./config/mongodb"
 import exitHook from "async-exit-hook"
 import { env } from "~/config/environment"
 import { APIs_V1 } from "~/routes/v1"
-import { errorHandlingMiddleware } from "./middlewares/errorHandlingMiddleWare"
+import { errorHandlingMiddleware } from "./middlewares/errorHandlingMiddleware"
 
 const START_SEVER = () => {
   const app = express()
