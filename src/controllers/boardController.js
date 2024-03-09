@@ -14,8 +14,9 @@ const createNew = async (req, res, next) => {
 
         res.status(StatusCodes.CREATED).json(createdBoard)
     } catch (error) {
+        // run into middleware
         next(error)
-    }
+    } 
 }
 
 export const boardController = {
