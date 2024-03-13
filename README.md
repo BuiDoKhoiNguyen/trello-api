@@ -19,4 +19,4 @@
 ```
 
 # FLow Code
-![Flow_code](/Users/buidokhoinguyen/ScreenShot/flowcode)
+![Flow_code](assets/flowcode.png)

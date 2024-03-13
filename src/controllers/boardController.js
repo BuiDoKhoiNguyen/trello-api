@@ -26,7 +26,7 @@ const getDetails = async (req, res, next) => {
 
         const board = await boardService.getDetails(boardId)
 
-        res.status(StatusCodes.CREATED).json(board)
+        res.status(StatusCodes.OK).json(board)
     } catch (error) {
         // run into middleware
         next(error)
