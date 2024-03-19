@@ -7,7 +7,7 @@ import { columnModel } from "./columnModel"
 import { cardModel } from "./cardModel"
 
 const BOARD_COLLECTION_NAME = 'boards'
-const BOARD_COLLECTION_SCHEME = Joi.object({
+const BOARD_COLLECTION_SCHEMA = Joi.object({
     title: Joi.string().required().min(3).max(50).trim().strict(),
     slug: Joi.string().required().min(3).trim().strict(),
     description: Joi.string().required().min(3).max(256).trim().strict(),
@@ -23,7 +23,7 @@ const BOARD_COLLECTION_SCHEME = Joi.object({
 })
 
 const validateBeforeCreate = async (data) => {
-    return await BOARD_COLLECTION_SCHEME.validateAsync(data, { abortEarly: false })
+    return await BOARD_COLLECTION_SCHEMA.validateAsync(data, { abortEarly: false })
 }
 
 const createNew = async (data) => {
@@ -72,7 +72,22 @@ const getDetails = async (id) => {
             } }
         ]).toArray()
 
-        return result[0] || {}
+        return result[0] || null
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+//push columnId values to end of columnOrderIds
+const pushColumnOrderIds = async (column) => {
+    try {
+        const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOneAndUpdate(
+            {_id: new ObjectId(column.boardId)},
+            { $push: { columnOrderIds: new ObjectId(column._id) } },
+            { returnDocument: 'after' }
+        )
+
+        return result.value
     } catch (error) {
         throw new Error(error)
     }
@@ -80,8 +95,9 @@ const getDetails = async (id) => {
 
 export const boardModel = {
     BOARD_COLLECTION_NAME,
-    BOARD_COLLECTION_SCHEME,
+    BOARD_COLLECTION_SCHEMA,
     createNew,
     findOneById,
-    getDetails
+    getDetails,
+    pushColumnOrderIds
 }
