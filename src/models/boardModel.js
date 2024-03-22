@@ -40,10 +40,10 @@ const createNew = async (data) => {
     }
 }
 
-const findOneById = async (id) => {
+const findOneById = async (boardId) => {
     try {
         const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOne({
-            _id: new ObjectId(id)
+            _id: new ObjectId(boardId)
         })
 
         return result
@@ -95,6 +95,20 @@ const pushColumnOrderIds = async (column) => {
     }
 }
 
+const pullColumnOrderIds = async (column) => {
+    try {
+        const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOneAndUpdate(
+            {_id: new ObjectId(column.boardId)},
+            { $pull: { columnOrderIds: new ObjectId(column._id) } },
+            { returnDocument: 'after' }
+        )
+
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 const update = async (boardId, updateData) => {
     try {
         // loc field ko cho phep cap nhat linh tinh
@@ -128,5 +142,6 @@ export const boardModel = {
     findOneById,
     getDetails,
     pushColumnOrderIds,
-    update
+    update,
+    pullColumnOrderIds
 }

@@ -16,7 +16,6 @@ const update = async (req, res, next) => {
     try {
         // console.log('req.params: ' ,req.param)
         const columnId = req.params.id
-
         const updatedColumn = await columnService.update(columnId, req.body)
 
         res.status(StatusCodes.OK).json(updatedColumn)
@@ -26,7 +25,21 @@ const update = async (req, res, next) => {
     } 
 }
 
+const deleteItem = async (req, res, next) => {
+    try {
+        // console.log('req.params: ' ,req.param)
+        const columnId = req.params.id
+        const result = await columnService.deleteItem(columnId, req.body)
+
+        res.status(StatusCodes.OK).json(result)
+    } catch (error) {
+        // run into middleware
+        next(error)
+    } 
+}
+
 export const columnController = {
     createNew,
-    update
+    update,
+    deleteItem
 }

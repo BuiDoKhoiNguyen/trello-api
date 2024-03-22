@@ -23,7 +23,7 @@ const update = async (req, res, next) => {
     const correctCondition = Joi.object({
         //alway validate data to make sure data is correctly
         // don't use required() in function update
-        boardId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
+        // boardId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
         title: Joi.string().min(3).max(50).trim().strict(),
         cardOrderIds: Joi.array().items(
             Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE)
@@ -42,7 +42,22 @@ const update = async (req, res, next) => {
     }
 }
 
+const deleteItem = async (req, res, next) => {
+    const correctCondition = Joi.object({
+        id: Joi.string().required().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE)
+    })
+
+    try {
+        await correctCondition.validateAsync(req.params)
+        next()  
+       
+    } catch (error) {
+        next(new ApiError(StatusCodes.UNPROCESSABLE_ENTITY, new Error(error).message))
+    }
+}
+
 export const columnValidation = {
     createNew,
-    update
+    update,
+    deleteItem
 }
