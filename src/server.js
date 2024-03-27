@@ -19,12 +19,22 @@ const START_SEVER = () => {
   // middleware xu li loi tap trung
   app.use(errorHandlingMiddleware)
 
-  app.listen(env.APP_PORT, env.APP_HOST, () => {
-    // eslint-disable-next-line no-console
-    console.log(
-      `3. Hello ${env.AUTHOR}, I am running at http://${env.APP_HOST}:${env.APP_PORT}/`
-    )
-  })
+  if(env.BUILD_MODE === 'production' ) {
+    app.listen(process.env.APP_PORT,  () => {
+      // eslint-disable-next-line no-console
+      console.log(
+        `3. Production Hello ${env.AUTHOR}, I am running at ${process.env.APP_PORT}/`
+      )
+    })
+  } else {
+    app.listen(env.APP_PORT, env.APP_HOST, () => {
+      // eslint-disable-next-line no-console
+      console.log(
+        `3. Hello ${env.AUTHOR}, I am running at http://${env.APP_HOST}:${env.APP_PORT}/`
+      )
+    })
+  }
+
 
   exitHook(() => {
     console.log("4. Disconnecting from MongoDB Cloud Atlas")
