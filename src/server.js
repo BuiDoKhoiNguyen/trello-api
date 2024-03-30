@@ -20,10 +20,10 @@ const START_SEVER = () => {
   app.use(errorHandlingMiddleware)
 
   if(env.BUILD_MODE === 'production' ) {
-    app.listen(process.env.APP_PORT,  () => {
+    app.listen(process.env.PORT,  () => {
       // eslint-disable-next-line no-console
       console.log(
-        `3. Production Hello ${env.AUTHOR}, I am running at ${process.env.APP_PORT}`
+        `3. Production Hello ${env.AUTHOR}, I am running at ${process.env.PORT}`
       )
     })
   } else {
