@@ -20,17 +20,17 @@ const START_SEVER = () => {
   app.use(errorHandlingMiddleware)
 
   if(env.BUILD_MODE === 'production' ) {
-    app.listen(process.env.APP_PORT,  () => {
+    app.listen(process.env.PORT,  () => {
       // eslint-disable-next-line no-console
       console.log(
-        `3. Production Hello ${env.AUTHOR}, I am running at ${process.env.APP_PORT}`
+        `3. Production Hello ${env.AUTHOR}, I am running at ${process.env.PORT}`
       )
     })
   } else {
-    app.listen(env.APP_PORT, env.APP_HOST, () => {
+    app.listen(env.LOCAL_DEV_APP_PORT, env.LOCAL_DEV_APP_HOST, () => {
       // eslint-disable-next-line no-console
       console.log(
-        `3. Hello ${env.AUTHOR}, I am running at http://${env.APP_HOST}:${env.APP_PORT}`
+        `3. Hello ${env.AUTHOR}, I am running at http://${env.LOCAL_DEV_APP_HOST}:${env.LOCAL_DEV_APP_PORT}`
       )
     })
   }
